@@ -10,21 +10,11 @@ from django.core.validators import (RegexValidator,
                                     MaxValueValidator)
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self):
+    def create_user(self, *args, **kwargs):
         pass
 
-    def create_superuser(self):
+    def create_superuser(self, *args, **kwargs):
         pass
-
-def zip_code_valid(zip_code:str):
-    if re.match(r'([0-9]{2})+-([0-9]{3})', zip_code):
-        return True
-    return ValidationError("Zip code isnt properly")
-
-def mobile_address_valid(mobile_phone:str):
-    if re.match(r'^([1-9]{1})+[0-9]{8}', mobile_phone):
-        return True
-    return ValidationError("Mobile phone is not properly")
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     ROLES = (
@@ -41,6 +31,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email_address = models.EmailField(max_length=80, blank=False)
     mobile_phone = models.CharField(max_length=9, validators=mobile_address_valid)
     role = models.CharField(max_length=8, choices=ROLES, default='DRIVER')
+    password = models.CharField(max_length=30, blank=False)
 
     is_active = True
     is_superuser = False
@@ -49,3 +40,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.id
 
+def zip_code_valid(zip_code:str):
+    if re.match(r'([0-9]{2})+-([0-9]{3})', zip_code):
+        return True
+    return ValidationError("Zip code isnt properly")
+
+def mobile_address_valid(mobile_phone:str):
+    if re.match(r'^([1-9]{1})+[0-9]{8}', mobile_phone):
+        return True
+    return ValidationError("Mobile phone is not properly")
