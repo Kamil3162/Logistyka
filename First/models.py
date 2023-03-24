@@ -5,7 +5,10 @@ from django.contrib.auth.models import (AbstractBaseUser,
                                         BaseUserManager,
                                         PermissionsMixin)
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
+from django.core.validators import (RegexValidator,
+                                    MinValueValidator,
+                                    MaxValueValidator)
+
 class CustomUserManager(BaseUserManager):
     def create_user(self):
         pass
@@ -35,11 +38,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     region = models.CharField(max_length=60, blank=False)
     zip_code = models.CharField(max_length=6,
                                 validators=[zip_code_valid])
-    email_address = ""
+    email_address = models.EmailField(max_length=80, blank=False)
     mobile_phone = models.CharField(max_length=9, validators=mobile_address_valid)
-    role = models.CharField(max_length=8, choices=ROLES)
+    role = models.CharField(max_length=8, choices=ROLES, default='DRIVER')
 
     is_active = True
     is_superuser = False
     is_staff = False
+
+    def __str__(self):
+        return self.id
 
