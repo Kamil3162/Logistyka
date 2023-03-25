@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'First.apps.FirstConfig',
-    'TruckOp.apps.TruckopConfig',
-    'api.apps.ApiConfig'
+    'First',
+    'TruckOp',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -125,7 +125,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'Fir'
+AUTH_USER_MODEL = 'First.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
