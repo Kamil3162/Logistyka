@@ -92,12 +92,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     mobile_phone = models.CharField(max_length=9, validators=[mobile_address_valid], unique=True)
     password = models.CharField(max_length=30, blank=False)
 
-    is_active = models.BooleanField(default=1,blank=False)
-    is_superuser = models.BooleanField(default=0,blank=False)
-    is_staff = models.BooleanField(default=0,blank=False)
-    is_admin = models.BooleanField(default=0, blank=False)
-    objects = CustomUserManager()
+    is_active = models.BooleanField(default=True,blank=False)
+    is_superuser = models.BooleanField(default=False,blank=False)
+    is_staff = models.BooleanField(default=False,blank=False)
+    is_admin = models.BooleanField(default=False, blank=False)
 
+    objects = CustomUserManager()
 
     USERNAME_FIELD = "email_address"
     REQUIRED_FIELDS = []
