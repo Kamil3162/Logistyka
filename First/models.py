@@ -85,7 +85,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email_address = models.EmailField(max_length=80, blank=False,
                                       unique=True, validators=[email_validator])
     mobile_phone = models.CharField(max_length=9, validators=[mobile_address_valid], unique=True)
-    password = models.CharField(max_length=80, blank=False)
+    password = models.CharField(max_length=180, blank=False)
 
     is_active = models.BooleanField(default=True,blank=False)
     is_superuser = models.BooleanField(default=False,blank=False)

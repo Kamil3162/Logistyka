@@ -99,7 +99,10 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
     'django.contrib.auth.hashers.CryptPasswordHasher',
 ]
-
+AUTHENTICATION_BACKENDS = (
+    'First.authentication.CustomUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -154,7 +157,3 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTHENTICATION_BACKENDS = [
-    'First.authentication.CustomUserBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]

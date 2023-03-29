@@ -8,7 +8,7 @@ from django.core.validators import (RegexValidator,
                                     ValidationError)
 
 def registration_num_validator(reg_num):
-    if re.search(r'([A-Z]{2,3})([0-9]{4,5})'):
+    if re.match(r'([A-Z]{2,3})([0-9]{4,5})', reg_num):
         return ValidationError("Register num is not proper")
 '''
 class Truck(models.Model):
