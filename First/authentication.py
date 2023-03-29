@@ -1,15 +1,25 @@
 from django.contrib.auth.backends import BaseBackend
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import get_user_model
 from .models import CustomUser
 
 class CustomUserBackend(BaseBackend):
-    def authenticate(self, request,email_address, password=None, **kwargs):
-        try:
-            user = CustomUser.objects.get(email_address=email_address)
-        except user.DoesNotExist:
-            return None
+    model = get_user_model()
 
-        if check_password(password, user.password):
-            return user
+    def authenticate(self, request,username=None, password=None, **kwargs):
+
+        print("auth started", username, password)
+        try:
+            user = self.model.objects.get(email_address=username)
+            print('esa')
+            print(user.password, password)
+            if check_password(password, user.password):
+                print('correct password')
+                return user
+            else:
+                print("incorrect password")
+        except self.model.DoesNotExist:
+            return None
 
     def get_user(self, user_id):
         try:

@@ -34,20 +34,11 @@ class CustomUserManager(BaseUserManager):
             mobile_phone=mobile_phone,
             **extra_fields
         )
-
         user.set_password(password)
         user.save(using=self._db)
         return user
     def create_superuser(self, name, surname, city, region, zip_code,
                     email_address, mobile_phone,password=None, **extra_fields):
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_admin', True)
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError("Superuser option is not set to True, try again ")
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError("Superuser option is not set to True, try again ")
-
         user = self.create_user(
             name=name,
             surname=surname,
@@ -59,6 +50,10 @@ class CustomUserManager(BaseUserManager):
             password=password,
             **extra_fields
         )
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
         return user
 
 def email_validator(email_add):
@@ -90,7 +85,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email_address = models.EmailField(max_length=80, blank=False,
                                       unique=True, validators=[email_validator])
     mobile_phone = models.CharField(max_length=9, validators=[mobile_address_valid], unique=True)
-    password = models.CharField(max_length=30, blank=False)
+    password = models.CharField(max_length=80, blank=False)
 
     is_active = models.BooleanField(default=True,blank=False)
     is_superuser = models.BooleanField(default=False,blank=False)

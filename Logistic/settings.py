@@ -98,7 +98,6 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher',
     'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
     'django.contrib.auth.hashers.CryptPasswordHasher',
-
 ]
 
 # Password validation
@@ -158,5 +157,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'First.authentication.CustomUserBackend',
     'django.contrib.auth.backends.ModelBackend',
-
 ]
