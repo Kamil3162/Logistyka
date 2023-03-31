@@ -17,7 +17,6 @@ class UsersDisplay(viewsets.ModelViewSet):
 def displayUsers(request):
     if request.method == 'GET':
         users = models.CustomUser.objects.all()
-        serializer = UserSerializer
+        serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-
 '''
