@@ -15,11 +15,17 @@ class UsersDisplay(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     #permission_classes = [permissions.IsAuthenticated]
 
+class SamiTruckDisplay(viewsets.ModelViewSet):
+    queryset = truckmodels.Truck.objects.all()
+    serializer_class = SemiTrailerSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+
 class TruckDisplay(APIView):
     def get(self, request):
         trucks = truckmodels.Truck.objects.all()
         serializer = TruckSerializer(trucks, many=True)
         return Response(serializer.data)
+
 
 # display alll users using functions
 '''
