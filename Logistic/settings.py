@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'First',
-    'TruckOp',
+    'backend.First',
+    'backend.TruckOp',
     'api',
     'corsheaders'
 ]
@@ -105,7 +105,7 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.CryptPasswordHasher',
 ]
 AUTHENTICATION_BACKENDS = (
-    'First.authentication.CustomUserBackend',
+    'backend.First.authentication.CustomUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 # Password validation

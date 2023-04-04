@@ -1,14 +1,11 @@
-from django.shortcuts import render
-from First import models
-from rest_framework import status, permissions, viewsets, generics
-from rest_framework.decorators import APIView, api_view
+from backend.First import models
+from rest_framework import viewsets
+from rest_framework.decorators import APIView
 from rest_framework.response import Response
-from First.serializers import UserSerializer
-from TruckOp import models as truckmodels
-from TruckOp.serializers import (TruckSerializer,
-                                 TruckEqupmentSerializer,
-                                 SemiTrailer,
-                                 SemiTrailerSerializer)
+from backend.First.serializers import UserSerializer
+from backend.TruckOp import models as truckmodels
+from backend.TruckOp.serializers import (TruckSerializer,
+                             SemiTrailerSerializer)
 # display all users first way
 class UsersDisplay(viewsets.ModelViewSet):
     queryset = models.CustomUser.objects.all()
