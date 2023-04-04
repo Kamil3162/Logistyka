@@ -15,7 +15,6 @@ export default function Users(){
     },[])
     return (
         <div>
-            esa
             <ul>
                 {user.map((item, i) => {
                     return <li>{item.name}</li>

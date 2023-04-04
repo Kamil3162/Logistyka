@@ -1,9 +1,4 @@
-
-
-
 import React, {useEffect, useState} from "react";
-
-
 export default function SamiTrucks(){
     const [samitrucks, getSamitrucks] = useState([]);
     const API = 'http://127.0.0.1:8000/api/samitrucks/';
@@ -20,7 +15,6 @@ export default function SamiTrucks(){
     },[])
     return (
         <div>
-            esa
             <ul>
                 {samitrucks.map((item, i) => {
                     return <li>{item.brand}</li>

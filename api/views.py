@@ -15,6 +15,7 @@ class UsersDisplay(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     #permission_classes = [permissions.IsAuthenticated]
 
+
 class SamiTruckDisplay(viewsets.ModelViewSet):
     queryset = truckmodels.Truck.objects.all()
     serializer_class = SemiTrailerSerializer

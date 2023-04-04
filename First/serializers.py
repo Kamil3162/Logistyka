@@ -6,9 +6,16 @@
 
 from .models import CustomUser
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['name', 'surname', 'email_address']
+        model = get_user_model()
+        fields = ['name', 'surname','city','region',
+                  'zip_code','email_address', 'mobile_phone','password']
+
+    def create(self, validated_data):
+        user = super().create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
