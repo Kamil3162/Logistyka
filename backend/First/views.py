@@ -37,8 +37,20 @@ class CreateUserAPI(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 class LogoutUserAPI(APIView):
-    pass
-
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        try:
+            user = CustomUser.objects.get(pk=kwargs['pk'])
+            logout(user)
+            return Response(status=status.HTTP_200_OK)
+        except user.DoesNotExist:
+            raise ValueError("following object does not exist")
+        return Response(status=status.HTTP_404_NOT_FOUND, data={'error':'User not found'})
 
 class LoginUserAPI(APIView):
-    pass
+    permission_classes = [permissions.AllowAny]
+    def post(self, request):
+        if request.data:
+            print(request.data)
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
