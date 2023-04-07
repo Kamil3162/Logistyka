@@ -2,9 +2,10 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
 from .models import CustomUser
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserLoginSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import exceptions
 from django.contrib.auth import (login,
                                  logout,
                                  authenticate,
@@ -49,8 +50,18 @@ class LogoutUserAPI(APIView):
 
 class LoginUserAPI(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = UserLoginSerializer
     def post(self, request):
         if request.data:
-            print(request.data)
-            return Response(status=status.HTTP_200_OK)
+            email = request.data.get('email')
+            password = request.data.get('password')
+            information = request.data
+            serializer = self.serializer_class(data=information)
+            if serializer.is_valid():
+                user = serializer.check_user(request.data)
+                login(request, user=user)
+                return Response(status=status.HTTP_200_OK)
+            else:
+                print(serializer.errors)
+                print("validation is not properly")
         return Response(status=status.HTTP_404_NOT_FOUND)
