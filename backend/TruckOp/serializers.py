@@ -17,7 +17,7 @@ class TruckEqupmentSerializer(serializers.ModelSerializer):
 class SemiTrailerSerializer(serializers.ModelSerializer):
     class Meta:
         model = SemiTrailer
-        fields = '__all__'
+        fields = ('brand', 'model')
 
 class SemiTrailerEquipSerializer(serializers.ModelSerializer):
     class Meta:

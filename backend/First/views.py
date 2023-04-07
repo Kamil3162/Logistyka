@@ -51,7 +51,7 @@ class LogoutUserAPI(APIView):
 class LoginUserAPI(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = UserLoginSerializer
-    def post(self, request):
+    def put(self, request):
         if request.data:
             email = request.data.get('email')
             password = request.data.get('password')
@@ -65,3 +65,7 @@ class LoginUserAPI(APIView):
                 print(serializer.errors)
                 print("validation is not properly")
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+class MainMenuDisplay(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    pass

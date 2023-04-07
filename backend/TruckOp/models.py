@@ -6,7 +6,7 @@ from django.core.validators import (RegexValidator,
                                     MinValueValidator,
                                     MaxValueValidator,
                                     ValidationError)
-
+from backend.First.models import CustomUser
 def registration_num_validator(reg_num):
     if re.match(r'([A-Z]{2,3})([0-9]{4,5})', reg_num):
         return ValidationError("Register num is not proper")
@@ -30,7 +30,8 @@ class Truck(models.Model):
     avaiable = models.CharField(choices=CHOICES, blank=False, max_length=4)
 
     def __str__(self):
-        return self.brand
+        return self.registration_number
+
 class TruckEquipment(models.Model):
     CHOICES = (
         ('Wol','Wolny'),
@@ -49,7 +50,7 @@ class TruckEquipment(models.Model):
     tire_pumping_wire = models.BooleanField(default=True, blank=False)
     complete_status = models.BooleanField(default=True)
     def __str__(self):
-        return self.truck
+        return str(self.truck)
 
     def status_checker(self):
         if all(self.chest, self.chains, self.jack_hitch,
@@ -69,7 +70,7 @@ class SemiTrailer(models.Model):
     semi_note = models.BooleanField(default=True, blank=False)
 
     def __str__(self):
-        return self.brand
+        return self.registration_number
 
 class SemiTrailerEquipment(models.Model):
     semi_trailer = models.ForeignKey(SemiTrailer,
@@ -91,8 +92,10 @@ class SemiTrailerEquipment(models.Model):
     roof_stick = models.BooleanField(default=True, blank=False)
     dimenstion_board = models.BooleanField(default=True, blank=False)
 
+    def __str__(self):
+        return self.semi_trailer.id
 
-'''
+
 class VehicleReceivment(models.Model):
     truck = models.ForeignKey(Truck,
                               on_delete=models.CASCADE,
@@ -103,6 +106,10 @@ class VehicleReceivment(models.Model):
                                      blank=False)
     data_created = models.DateField(auto_created=True)
     data_ended = models.DateField()
+    user = models.ForeignKey(CustomUser,
+                             on_delete=models.CASCADE,
+                             blank=False)
 
-'''
+    def __str__(self):
+        return self.id
 

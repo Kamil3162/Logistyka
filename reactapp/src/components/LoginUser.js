@@ -9,7 +9,7 @@ export default function LoginUser(){
         e.preventDefault();
         try{
             let response = await fetch(API, {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',

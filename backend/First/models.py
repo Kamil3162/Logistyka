@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import (RegexValidator,
                                     MinValueValidator,
                                     MaxValueValidator)
-
+from secrets import compare_digest
 class CustomUserManager(BaseUserManager):
     def create_user(self, name, surname, city, region, zip_code,
                     email_address, mobile_phone,password=None, **extra_fields):
