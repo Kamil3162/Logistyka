@@ -10,7 +10,9 @@ from django.contrib.auth import (login,
                                  logout,
                                  authenticate,
                                  get_user_model)
+from rest_framework import authentication
 from rest_framework import permissions
+from rest_framework.authtoken.models import Token
 def index(request):
     return render(request, 'index.html')
 
@@ -60,6 +62,11 @@ class LoginUserAPI(APIView):
             if serializer.is_valid():
                 user = serializer.check_user(request.data)
                 login(request, user=user)
+               #token, created = Token.get_or_create(user=user)
+                print(token, created)
+                print(request.user)     # return User instance
+                print(request.auth)     # return None
+                print(request.session.session_key)
                 return Response(status=status.HTTP_200_OK)
             else:
                 print(serializer.errors)
@@ -68,4 +75,6 @@ class LoginUserAPI(APIView):
 
 class MainMenuDisplay(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.SessionAuthentication]
+
     pass

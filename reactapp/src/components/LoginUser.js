@@ -24,6 +24,7 @@ export default function LoginUser(){
                 setEmial("");
                 setPassword("")
                 setMessage("U are log in");
+                console.log(response.user)
             }
             else{
                 console.log("HTTP REsponse different than 200");
