@@ -15,6 +15,7 @@ export default function SamiTrucks(){
     },[])
     return (
         <div>
+            trucks
             <ul>
                 {samitrucks.map((item, i) => {
                     return <li>{item.brand}</li>

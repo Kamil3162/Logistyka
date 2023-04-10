@@ -52,9 +52,12 @@ class LogoutUserAPI(APIView):
 
 class LoginUserAPI(APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = [authentication.SessionAuthentication]
     serializer_class = UserLoginSerializer
     def put(self, request):
+        print("esa request")
         if request.data:
+            print("esa dalej")
             email = request.data.get('email')
             password = request.data.get('password')
             information = request.data
@@ -62,8 +65,6 @@ class LoginUserAPI(APIView):
             if serializer.is_valid():
                 user = serializer.check_user(request.data)
                 login(request, user=user)
-               #token, created = Token.get_or_create(user=user)
-                print(token, created)
                 print(request.user)     # return User instance
                 print(request.auth)     # return None
                 print(request.session.session_key)

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-
 export default function LoginUser(){
     const [email, setEmial] = useState([]);
     const [password, setPassword] = useState([]);
@@ -24,7 +23,7 @@ export default function LoginUser(){
                 setEmial("");
                 setPassword("")
                 setMessage("U are log in");
-                console.log(response.user)
+                console.log(response.user);
             }
             else{
                 console.log("HTTP REsponse different than 200");
