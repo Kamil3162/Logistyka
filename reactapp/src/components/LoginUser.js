@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+
 export default function LoginUser(){
     const [email, setEmial] = useState([]);
     const [password, setPassword] = useState([]);
@@ -8,16 +9,19 @@ export default function LoginUser(){
         e.preventDefault();
         try{
             let response = await fetch(API, {
-                method: "PUT",
+                method: "POST",
+                mode : 'cors',
+                credentials : 'include',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': true
                 },
                 body: JSON.stringify({
                     email: email,
                     password: password
                 }),
-
             })
             if (response.status == 200){
                 setEmial("");

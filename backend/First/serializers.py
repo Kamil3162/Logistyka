@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['name', 'surname','city','region',
-                  'zip_code','email_address', 'mobile_phone','password']
+                  'zip_code', 'email_address', 'mobile_phone','password']
 
     def create(self, validated_data):
         user = super().create(validated_data)
@@ -22,7 +22,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    password =serializers.CharField()
+    password = serializers.CharField()
+
     def check_user(self, clean_data):
         user = authenticate(username = clean_data.get('email'),
                             password = clean_data.get('password'))

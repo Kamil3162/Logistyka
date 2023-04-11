@@ -21,6 +21,7 @@ class CreateUserAPI(APIView):
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
+
     def post(self, request):
         print('this is post method to add data to api ')
         print(request.data.get('name'))
@@ -41,6 +42,7 @@ class CreateUserAPI(APIView):
 
 class LogoutUserAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    '''
     def get(self, request, *args, **kwargs):
         try:
             user = CustomUser.objects.get(pk=kwargs['pk'])
@@ -49,12 +51,17 @@ class LogoutUserAPI(APIView):
         except user.DoesNotExist:
             raise ValueError("following object does not exist")
         return Response(status=status.HTTP_404_NOT_FOUND, data={'error':'User not found'})
+        '''
+    def get(self, request):
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
 
 class LoginUserAPI(APIView):
+
     permission_classes = [permissions.AllowAny]
-    authentication_classes = [authentication.SessionAuthentication]
     serializer_class = UserLoginSerializer
-    def put(self, request):
+
+    def post(self, request):
         print("esa request")
         if request.data:
             print("esa dalej")
@@ -68,7 +75,7 @@ class LoginUserAPI(APIView):
                 print(request.user)     # return User instance
                 print(request.auth)     # return None
                 print(request.session.session_key)
-                return Response(status=status.HTTP_200_OK)
+                return Response(status=status.HTTP_200_OK, headers={'Access-Control-Allow-Origin': 'http://localhost:3000'})
             else:
                 print(serializer.errors)
                 print("validation is not properly")
@@ -78,4 +85,6 @@ class MainMenuDisplay(APIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [authentication.SessionAuthentication]
 
-    pass
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response({'user': serializer.data}, status=status.HTTP_200_OK)

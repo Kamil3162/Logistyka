@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'api',
     'corsheaders'
 ]
-CORS_ORIGIN_ALLOW_ALL = True    # this option should be off on public
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -54,10 +55,26 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:3000',
+    "http://localhost:3000"
+)
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+CORS_ORIGIN_ALLOW_ALL = True    # this option should be off on public
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',  # make sure this is included
+]
+
 ROOT_URLCONF = 'Logistic.urls'
 
 TEMPLATES = [
@@ -129,6 +146,7 @@ REST_FRAMEWORK = {
 # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
