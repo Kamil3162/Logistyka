@@ -3,7 +3,8 @@ import django.core.validators
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser,
                                         BaseUserManager,
-                                        PermissionsMixin)
+                                        PermissionsMixin,
+                                        AbstractUser)
 from django.core.exceptions import ValidationError
 from django.core.validators import (RegexValidator,
                                     MinValueValidator,
@@ -22,7 +23,6 @@ class CustomUserManager(BaseUserManager):
             raise ValueError("Please enter you name")
         if not zip_code:
             raise ValueError("Please enter zip code:")
-
 
         user = self.model(
             name=name,
@@ -67,7 +67,6 @@ def zip_code_valid(zip_code):
 def mobile_address_valid(mobile_phone):
     if not re.match(r'^([1-9]{1})+[0-9]{8}', mobile_phone):
         return ValidationError("Mobile phone is not properly")
-
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     '''
     ROLES = (

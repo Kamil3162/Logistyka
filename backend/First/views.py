@@ -57,7 +57,6 @@ class LogoutUserAPI(APIView):
         return Response(status=status.HTTP_200_OK)
 
 class LoginUserAPI(APIView):
-
     permission_classes = [permissions.AllowAny]
     serializer_class = UserLoginSerializer
 
@@ -67,6 +66,7 @@ class LoginUserAPI(APIView):
             print("esa dalej")
             email = request.data.get('email')
             password = request.data.get('password')
+            print(request.data.COOKIES)
             information = request.data
             serializer = self.serializer_class(data=information)
             if serializer.is_valid():
@@ -75,7 +75,7 @@ class LoginUserAPI(APIView):
                 print(request.user)     # return User instance
                 print(request.auth)     # return None
                 print(request.session.session_key)
-                return Response(status=status.HTTP_200_OK, headers={'Access-Control-Allow-Origin': 'http://localhost:3000'})
+                return Response(status=status.HTTP_200_OK, headers={'Access-Control-Allow-Origin': '*'})
             else:
                 print(serializer.errors)
                 print("validation is not properly")

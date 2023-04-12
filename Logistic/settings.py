@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-6=la(&kh$dc)nlgut5&r7s2ptqlrvq@2o+*^ib1%0v(mbv#bo-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost"
+]
 
 
 # Application definition
@@ -37,11 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'backend.First',
     'backend.TruckOp',
-    'api',
-    'corsheaders'
+    'api'
 ]
 
 
@@ -55,24 +58,34 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:3000',
-    "http://localhost:3000"
-)
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+
+
 CORS_ORIGIN_ALLOW_ALL = True    # this option should be off on public
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_METHODS = [
+CORS_ALLOW_METHODS = (
     'DELETE',
     'GET',
     'OPTIONS',
     'PATCH',
     'POST',
-    'PUT',  # make sure this is included
+    'PUT'
+)
+CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000',
+    'http://localhost:3000'
+]
+CORS_ALLOWED_ORIGINS = (
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8000",
+    "http://localhost:3000",
+)
+CSRF_TRUSTED_ORIGINS = (
+    'http://127.0.0.1:3000',
+    'http://localhost:3000'
+)
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    'http://localhost:3000',
 ]
 
 ROOT_URLCONF = 'Logistic.urls'
@@ -146,11 +159,11 @@ REST_FRAMEWORK = {
 # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny'
     ]
 }
