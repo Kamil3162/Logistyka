@@ -1,37 +1,26 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import cors from "cors";
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
-
+const client = axios.create({
+    baseURL: "http://127.0.0.1:8000"
+})
 export default function LoginUser(){
     const [email, setEmial] = useState([]);
     const [password, setPassword] = useState([]);
     const [message, setMessage] = useState("");
-    const API = 'http://127.0.0.1:8000/login';
+    const API = 'http://localhost:8000/login';
     let handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            let response = axios({
-                method: "POST",
-                url: 'http://127.0.0.1:8000/login',
-                mode : "same-origin",
-                credentials: "include",
-                headers: {
-                    'Access-Control-Allow-Credentials': true,
-                    'Access-Control-Allow-Headers': 'accept, accept-encoding, authorization, content-type, dnt, origin, user-agent, x-csrftoken, x-requested-with',
-                    'Access-Control-Allow-Origin': 'http://127.0.0.1:3000',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-
-                },
-                withCredentials:true,
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                }),
-            })
+            let response = client.post(API,{
+                    email:email,
+                    password:password
+                }
+            )
             if (response.status == 200){
                 setEmial("");
                 setPassword("")
@@ -42,6 +31,7 @@ export default function LoginUser(){
                 console.log("HTTP REsponse different than 200");
                 console.log(email);
                 console.log(password);
+                console.log(response)
             }
         }catch (err){
             console.log(err);

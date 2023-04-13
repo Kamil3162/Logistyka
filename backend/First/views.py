@@ -13,6 +13,7 @@ from django.contrib.auth import (login,
 from rest_framework import authentication
 from rest_framework import permissions
 from rest_framework.authtoken.models import Token
+import json
 def index(request):
     return render(request, 'index.html')
 
@@ -64,10 +65,14 @@ class LoginUserAPI(APIView):
         print("esa request")
         if request.data:
             print("esa dalej")
+            #data = json.loads(request.data.get('body'))
+            #print(data)
+            information = request.data
             email = request.data.get('email')
             password = request.data.get('password')
-            print(request.data.COOKIES)
-            information = request.data
+            print(information)
+            print(email)
+            print(password)
             serializer = self.serializer_class(data=information)
             if serializer.is_valid():
                 user = serializer.check_user(request.data)
@@ -79,7 +84,7 @@ class LoginUserAPI(APIView):
             else:
                 print(serializer.errors)
                 print("validation is not properly")
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND, data={'error': 'you pass inproper data'})
 
 class MainMenuDisplay(APIView):
     permission_classes = [permissions.IsAuthenticated]
